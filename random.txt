@@ -1,0 +1,99 @@
+1) Create a Maven project
+mvn archetype:generate -DgroupId=com.example -DartifactId=MyMavenApp –
+DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+
+2) Go inside the newly created project
+cd MyMavenApp
+
+3) Package the newly created project
+mvn package
+
+4) Open pom.xml and type the following code (after version tag (or) after name tag)
+<properties>
+
+<maven.compiler.source>6</maven.compiler.source>
+
+<maven.compiler.target>1.6</maven.compiler.target>
+
+</properties>
+
+5) Again package the project using the command mvn package
+
+6) See the list of options that can be used with git by typing
+git
+7) Add your email by typing
+git config - - global user.email “Github email”
+
+8) Add your name by typing
+git config - - global user.name “Github username”
+
+9) Initialize the Git repository
+git init
+10) Add pom.xml file
+git add pom.xml
+11) Add the source folder
+git add src
+12) Generate one SSH key
+ssh-keygen -t ed25519 -C “Github email”
+
+For enter file, don’t give anything just press Enter
+For enter passphrase, don’t give anything just press Enter
+For enter same passphrase again, don’t give anything just press Enter
+
+13) Display the contents of the public key file id_ed25519.pub
+cat /home/student/.ssh/ id_ed25519.pub
+14) Give a commit message
+git commit -m “Your commit message”
+15) Set the origin to your Github account and repository
+git remote add origin https://github.com/<repo link>git
+16) Set push to Github for saving code to Github repository
+git config - - global push.autoSetupRemote true
+17) Push code to Github repository
+git push origin main
+
+18) git pull - - rebase origin main (Execute this command if previous command fails)
+
+19) git branch -M main (Execute this command if step 17 fails)
+20) git push -u origin main (Execute this command if step 17 fails)
+21) git remote set-url origin https://github.com/<repo link>git (in
+case you accidentally did step 15 more than once)
+22) Then, see the status of Jenkins by typing the following command
+sudo systemctl status jenkins
+(If you get a green symbol, it means Jenkins is active/running)
+23) Type localhost:8080 in the browser and enter
+Username : admin
+Password : The password which you get after typing the command
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+24) Click on “New Item” -&gt; Enter an item name like MavenCI
+
+25) Select Pipeline and click on Ok
+
+26) 
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/cmritsarada/exp6.git' // Replace with your repository URL
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+    }
+}
+
+27) Click on Save
+28) Click on “Build Now” and check if Build is successful or not.
+If build is successful, experiment is completed
+If build fails, check your pipeline script, correct it -&gt; Click on Save -&gt; Click on Build
+Now.
