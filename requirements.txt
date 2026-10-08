@@ -1,6 +1,6 @@
 python
 numpy, sympy, flask, django
-c++
+cpp
 next.js
 java
 
